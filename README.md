@@ -48,17 +48,13 @@ Your username and password **must** be the same for Nextcloud and Roundcube to w
 The Nextcloud account must be created and user must log into Nextcloud at least once before calendar will sync in Roundcube. Nextcloud does not create calendars until the initial login, so there will be no calendar for the Roundcube Calendar to find.\
 There are no plans at this time to implement the use of different login usernames. \
 There shouldn't be any issues if you create your users in Nextcloud using the exact username and password required to login to Roundcube. \
-There are configurable parameters to alter your email for logins within Roundcube config that may help you out if you require something a little different.
+There are configurable parameters to alter your email for logins within Roundcube config that may help you out if you require something a little different.  \
+Your roundcube and nextcloud must be run from same domain, no subdomains because of cross-scripting issues.  
 
 **Known Issues**
 
 * There are 4 persistent errors being thrown in Roundcube errors.log. More info at bottom of this file.
 * Will not create new calendar from Roundcube Calendar GUI.
-* Recurring events marked as "All Day" displays a day early the following instance of it.
-	* Workarounds for All Day Recurring Events issue:
-		- Do not check the "All Day" box and there will be no issue. 
-			- If you just have to have that box checked, do so and save it. Let Calendar refresh.
-			- Edit the event again and do nothing but click save. It should work properly now.
 
 **Help Wanted**
 
