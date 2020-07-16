@@ -2,7 +2,7 @@
     "name": "texxasrulez/caldav_calendar_te",
     "type": "roundcube-plugin",
     "description": "Library providing common functions for calendaring plugins.",
-    "homepage": "https://github.com/texxasrulez/caldav_calendar",
+    "homepage": "https://github.com/texxasrulez/caldav_calendar_te",
     "license": "GPL-3.0-only",
     "version": "0.9",
     "authors": [
