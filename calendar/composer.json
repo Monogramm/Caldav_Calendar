@@ -4,7 +4,7 @@
     "description": "CalDav Capable Calendar plugin for Roundcube forked from Kolab 3.5.2. The _te stands for Texas Edition",
     "homepage": "https://github.com/texxasrulez/caldav_calendar_te",
     "license": "GPL-3.0-only",
-    "version": "0.9",
+    "version": "0.9.1",
     "authors": [
         {
             "name": "Thomas Bruederli",
@@ -44,9 +44,7 @@
      "extra": {
         "roundcube": {
             "min-version": "1.4.0",
-            "sql-dir": "drivers/database/SQL",
-            "sql-dir": "drivers/caldav/SQL",
-            "sql-dir": "drivers/ical/SQL",
+            "sql-dir": "drivers",
 		"asset-installer-paths": {
 			"npm-asset-library": "/lib/vendors/league"
     }
