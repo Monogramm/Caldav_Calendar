@@ -1,7 +1,8 @@
 /**
- * CalDAV Client
+ * iCAL Client
  *
- * @version @package_version@
+ * @author Gene Hawkins <texxasrulez@yahoo.com>
+ * @version @package-version@
  * @author Daniel Morlock <daniel.morlock@awesome-it.de>
  *
  * Copyright (C) Awesome IT GbR <info@awesome-it.de>
@@ -20,5 +21,4 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-ALTER TABLE `caldav_props` change `user` `username` varchar(255);
-ALTER TABLE `events` ADD `status` VARCHAR(32) NOT NULL DEFAULT '' AFTER `sensitivity`;
+Help would be nice

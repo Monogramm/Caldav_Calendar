@@ -9,11 +9,11 @@ Never fret, I have a Stable Version Ready to Rock 'n Roll. Download below ...  \
 **USE AT YOUR OWN RISK**
 
 **Tested and working using the following:**
-* Roundcube v1.4.2
-* Composer v1.6.3
+* Roundcube v1.4.7
+* Composer v1.10.9
 * Nextcloud v18.0
-* PHP v7.2.24
-* MySQL Server v5.5.60
+* PHP v7.2.32
+* MySQL Server v5.7.31
 
 **Elastic Skin Support now available**
 
@@ -32,15 +32,15 @@ For Older Roundcube versions (v1.3.x and older) download [v0.4](https://github.c
 
 1. Download zip file of the latest release or most current commit in master branch from github
 1. Copy/FTP/Upload calendar, libcalendaring and libkolab folders to Roundcube Plugin folder. 
-1. Run `composer install` in calendar plugin directory
+1. Run `composer install` in calendar plugin directory. If not installed globally run `php composer.phar install`  
 2. Copy config.inc.php.dist to config.inc.php, located in root of calendar directory, and edit the following according to your requirements:
 	* Change domain.ltd to your FQDN. 
 	* If Nextcloud was installed using a custom directory, change /nextcloud/ in the URL structure to match the directory you installed in.
-	* **IMPORTANT** - Change calendar_crypt_key to any random sequence of 24 characters.
-	* There are many customizable variables which can be changed to your suite your needs.
-3. Import the corresponding initial SQL schema (MySQL, Postgres) located in calendar/drivers/*/SQL/ folder to your Roundcube database.
-4. Add "calendar" to $config['plugins'] in your Roundcube main config file.
-5. Login to Roundcube, click on the Calendar Tab, give it 15-30 seconds to do its thang and you should be good to go.
+	* **IMPORTANT** - Change calendar_crypt_key to any random sequence at least 24 characters. Pwgen on linux run `pwgen -s 24'  
+	* There are many customizable variables which can be changed to your suite your needs.  
+3. Import the corresponding initial SQL schema (MySQL, Postgres) located in calendar/drivers/*/SQL/ folder to your Roundcube database.  
+4. Add "calendar" to $config['plugins'] in your Roundcube main config file.  
+5. Login to Roundcube, click on the Calendar Tab, give it 15-30 seconds to do its thang and you should be good to go.  
 
 ***VERY IMPORTANT***
 
@@ -53,7 +53,6 @@ Your roundcube and nextcloud must be run from same domain, no subdomains because
 
 **Known Issues**
 
-* There are 4 persistent errors being thrown in Roundcube errors.log. More info at bottom of this file.
 * Will not create new calendar from Roundcube Calendar GUI.
 
 **Help Wanted**
@@ -68,7 +67,7 @@ If anyone would like to help maintain and develop more features, I would truly a
 - [x] ~~Assign random colors upon initial sync of calendars.~~ - Thank you @drlight17
 - [ ] Add sound notifications.
 - [ ] Integrate a Caldav Enabled Tasklist plugin.
-- [ ] Add Emoticon Support.
+- [x] ~~Add Emoticon Support.~~
 - [x] ~~Remove mcrypt and replace with openssl.~~ Thank you @MAT-WEISS-2017
 * User feature requests are always welcome but I cannot guarantee if I can pull it off ... :relaxed:
 

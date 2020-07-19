@@ -769,6 +769,13 @@ class caldav_driver extends calendar_driver
                 unset($attachment);
             }
         }
+
+        // remove attachments
+        if ($success && !empty($event['deleted_attachments'])) {
+            foreach ($event['deleted_attachments'] as $attachment) {
+                $this->remove_attachment($attachment, $event['id']);
+            }
+        }
         if ($success) {
             unset($this->cache[$event['id']]);
             if ($update_recurring)
@@ -1448,7 +1455,7 @@ class caldav_driver extends calendar_driver
             $attendees = json_decode($s_attendees, true);
         } // decode the old serialization format
         else {
-            foreach (explode("\r\n", $event['attendees']) as $line) {
+            foreach (explode("\n", $event['attendees']) as $line) {
                 $att = array();
                 foreach (rcube_utils::explode_quoted_string(';', $line) as $prop) {
                     list($key, $value) = explode("=", $prop);
@@ -1563,7 +1570,7 @@ class caldav_driver extends calendar_driver
         if(isset($calendar["caldav_oauth_provider"]) && ($provider = oauth_client::get_provider($calendar["caldav_oauth_provider"]) !== false)){
             array_push($oauth2_buttons, new html_inputfield(array(
                 "type" => "button",
-                "class" => "button",
+                "class" => "propform",
                 "onclick" => "", // TODO: Do s.th.
                 "value" => $this->cal->gettext("logout_from").$provider["name"]
             )));
@@ -1586,7 +1593,7 @@ class caldav_driver extends calendar_driver
         if (is_array($hidden_fields)) {
             foreach ($hidden_fields as $field) {
                 $hiddenfield = new html_hiddenfield($field);
-                $this->form_html .= $hiddenfield->show() . "\r\n";
+                $this->form_html .= $hiddenfield->show() . "\n";
             }
         }
         // Create form output
@@ -1596,7 +1603,7 @@ class caldav_driver extends calendar_driver
                 foreach ($tab['fieldsets'] as $fieldset) {
                     $subcontent = $this->get_form_part($fieldset);
                     if ($subcontent) {
-                        $content .= html::tag('fieldset', null, html::tag('legend', null, rcube::Q($fieldset['name'])) . $subcontent) ."\r\n";
+                        $content .= html::tag('fieldset', null, html::tag('legend', null, rcube::Q($fieldset['name'])) . $subcontent) ."\n";
                     }
                 }
             }
@@ -1604,7 +1611,7 @@ class caldav_driver extends calendar_driver
                 $content = $this->get_form_part($tab);
             }
             if ($content) {
-                $this->form_html .= html::tag('fieldset', null, html::tag('legend', null, rcube::Q($tab['name'])) . $content) ."\r\n";
+                $this->form_html .= html::tag('fieldset', null, html::tag('legend', null, rcube::Q($tab['name'])) . $content) ."\n";
             }
         }
         // Parse form template for skin-dependent stuff
