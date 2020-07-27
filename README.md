@@ -67,7 +67,7 @@ If anyone would like to help maintain and develop more features, I would truly a
 - [x] ~~Assign random colors upon initial sync of calendars.~~ - Thank you @drlight17
 - [ ] Add sound notifications.
 - [ ] Integrate a Caldav Enabled Tasklist plugin.
-- [x] ~~Add Emoticon Support.~~
+- [x] ~~Add Emoticon Support.~~ @texxasrulez
 - [x] ~~Remove mcrypt and replace with openssl.~~ Thank you @MAT-WEISS-2017
 * User feature requests are always welcome but I cannot guarantee if I can pull it off ... :relaxed:
 
