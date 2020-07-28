@@ -21,7 +21,7 @@
  */
 require_once (dirname(__FILE__).'/caldav_sync.php');
 require_once (dirname(__FILE__).'/../../lib/encryption.php');
-require_once (dirname(__FILE__).'/../../lib/oauth-client.php');
+require_once (dirname(__FILE__).'/../../lib/oauth_client.php');
 class caldav_driver extends calendar_driver
 {
     const DB_DATE_FORMAT = 'Y-m-d H:i:s';
@@ -769,13 +769,6 @@ class caldav_driver extends calendar_driver
                 unset($attachment);
             }
         }
-
-        // remove attachments
-        if ($success && !empty($event['deleted_attachments'])) {
-            foreach ($event['deleted_attachments'] as $attachment) {
-                $this->remove_attachment($attachment, $event['id']);
-            }
-        }
         if ($success) {
             unset($this->cache[$event['id']]);
             if ($update_recurring)
@@ -1455,7 +1448,7 @@ class caldav_driver extends calendar_driver
             $attendees = json_decode($s_attendees, true);
         } // decode the old serialization format
         else {
-            foreach (explode("\n", $event['attendees']) as $line) {
+            foreach (explode("\r\n", $event['attendees']) as $line) {
                 $att = array();
                 foreach (rcube_utils::explode_quoted_string(';', $line) as $prop) {
                     list($key, $value) = explode("=", $prop);
@@ -1570,7 +1563,7 @@ class caldav_driver extends calendar_driver
         if(isset($calendar["caldav_oauth_provider"]) && ($provider = oauth_client::get_provider($calendar["caldav_oauth_provider"]) !== false)){
             array_push($oauth2_buttons, new html_inputfield(array(
                 "type" => "button",
-                "class" => "propform",
+                "class" => "button",
                 "onclick" => "", // TODO: Do s.th.
                 "value" => $this->cal->gettext("logout_from").$provider["name"]
             )));
@@ -1593,7 +1586,7 @@ class caldav_driver extends calendar_driver
         if (is_array($hidden_fields)) {
             foreach ($hidden_fields as $field) {
                 $hiddenfield = new html_hiddenfield($field);
-                $this->form_html .= $hiddenfield->show() . "\n";
+                $this->form_html .= $hiddenfield->show() . "\r\n";
             }
         }
         // Create form output
@@ -1603,7 +1596,7 @@ class caldav_driver extends calendar_driver
                 foreach ($tab['fieldsets'] as $fieldset) {
                     $subcontent = $this->get_form_part($fieldset);
                     if ($subcontent) {
-                        $content .= html::tag('fieldset', null, html::tag('legend', null, rcube::Q($fieldset['name'])) . $subcontent) ."\n";
+                        $content .= html::tag('fieldset', null, html::tag('legend', null, rcube::Q($fieldset['name'])) . $subcontent) ."\r\n";
                     }
                 }
             }
@@ -1611,7 +1604,7 @@ class caldav_driver extends calendar_driver
                 $content = $this->get_form_part($tab);
             }
             if ($content) {
-                $this->form_html .= html::tag('fieldset', null, html::tag('legend', null, rcube::Q($tab['name'])) . $content) ."\n";
+                $this->form_html .= html::tag('fieldset', null, html::tag('legend', null, rcube::Q($tab['name'])) . $content) ."\r\n";
             }
         }
         // Parse form template for skin-dependent stuff
@@ -1771,9 +1764,9 @@ class caldav_driver extends calendar_driver
         $cal_attribs = array('{DAV:}resourcetype', '{DAV:}displayname', '{http://apple.com/ns/ical/}calendar-color');
         $oauth_client = (isset($props["caldav_oauth_provider"]) && $props["caldav_oauth_provider"]) ? new oauth_client($this->rc, $props["caldav_oauth_provider"]) : null;
         if (!class_exists('caldav_client')) {
-        	require_once ($this->cal->home.'/lib/caldav-client.php');
+        	require_once ($this->cal->home.'/lib/caldav_client.php');
         }
-        $caldav = new caldav_client($props["caldav_url"], $props["caldav_user"], $props["caldav_pass"]);
+        $caldav = new caldav_client($props["caldav_url"], $props["caldav_user"], $props["caldav_pass"], $props["auth_type"]);
         $tokens = parse_url($props["caldav_url"]);
         $base_uri = $tokens['scheme']."://".$tokens['host'].($tokens['port'] ? ":".$tokens['port'] : null);
         $caldav_url = $props["caldav_url"];

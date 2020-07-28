@@ -1,25 +1,25 @@
 {
-    "name": "texxasrulez/caldav_calendar_te",
-    "type": "roundcube-plugin",
-    "description": "Caldav Calendar plugin for use with NextCloud - Texas Edition",
-    "homepage": "https://github.com/texxasrulez/caldav_calendar_te",
-    "license": "GPL-3.0-only",
-    "version": "0.9.1",
-    "authors": [
-        {
-            "name": "Gene Hawkins",
-            "email": "texxasrulez@yahoo.com",
-            "role": "Lead"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://plugins.roundcube.net"
-        }
-    ],
-    "require": {
-        "php": ">=7.1.0",
-        "roundcube/plugin-installer": ">=0.1.3"
-    }
+	"name": "texxasrulez/caldav_calendar_te",
+	"type": "roundcube-plugin",
+	"description": "Caldav Calendar plugin for use with NextCloud - Texas Edition",
+	"homepage": "https://github.com/texxasrulez/caldav_calendar_te",
+	"license": "GPL-3.0-only",
+	"version": "0.9.1",
+	"authors": [
+		{
+			"name": "Gene Hawkins",
+			"email": "texxasrulez@yahoo.com",
+			"role": "Lead"
+		}
+	],
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://plugins.roundcube.net"
+		}
+	],
+	"require": {
+		"php": ">=7.1.0",
+		"roundcube/plugin-installer": ">=0.1.3"
+	}
 }

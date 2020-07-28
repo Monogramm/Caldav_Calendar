@@ -20,6 +20,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* Create new tables */
 CREATE TABLE IF NOT EXISTS `caldav_calendars` (
   `calendar_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -27,12 +28,10 @@ CREATE TABLE IF NOT EXISTS `caldav_calendars` (
   `color` varchar(8) NOT NULL,
   `showalarms` tinyint(1) NOT NULL DEFAULT '1',
 
-  `caldav_url` varchar(1000) NOT NULL,
+  `caldav_url` varchar(255) NOT NULL,
   `caldav_tag` varchar(255) DEFAULT NULL,
   `caldav_user` varchar(255) DEFAULT NULL,
   `caldav_pass` varchar(1024) DEFAULT NULL,
-  `caldav_oauth_provider` varchar(255) DEFAULT NULL,
-  `readonly` int NOT NULL DEFAULT '0',
   `caldav_last_change` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY(`calendar_id`),
@@ -46,14 +45,12 @@ CREATE TABLE IF NOT EXISTS `caldav_events` (
   `calendar_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `recurrence_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `uid` varchar(255) NOT NULL DEFAULT '',
-  `instance` varchar(16) NOT NULL DEFAULT '',
-  `isexception` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `changed` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `sequence` int(1) UNSIGNED NOT NULL DEFAULT '0',
   `start` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `end` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
-  `recurrence` varchar(1000) DEFAULT NULL,
+  `recurrence` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `location` varchar(255) NOT NULL DEFAULT '',
@@ -64,11 +61,11 @@ CREATE TABLE IF NOT EXISTS `caldav_events` (
   `priority` tinyint(1) NOT NULL DEFAULT '0',
   `sensitivity` tinyint(1) NOT NULL DEFAULT '0',
   `status` varchar(32) NOT NULL DEFAULT '',
-  `alarms` text NULL DEFAULT NULL,
+  `alarms` varchar(255) DEFAULT NULL,
   `attendees` text DEFAULT NULL,
   `notifyat` datetime DEFAULT NULL,
 
-  `caldav_url` varchar(1000) NOT NULL,
+  `caldav_url` varchar(255) NOT NULL,
   `caldav_tag` varchar(255) DEFAULT NULL,
   `caldav_last_change` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
@@ -77,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `caldav_events` (
   INDEX `caldav_recurrence_idx` (`recurrence_id`),
   INDEX `caldav_calendar_notify_idx` (`calendar_id`,`notifyat`),
   CONSTRAINT `fk_caldav_events_calendar_id` FOREIGN KEY (`calendar_id`)
-  REFERENCES `caldav_calendars`(`calendar_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  REFERENCES `calendars`(`calendar_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) /*!40000 ENGINE=INNODB */ /*!40101 CHARACTER SET utf8 COLLATE utf8_general_ci */;
 
 CREATE TABLE IF NOT EXISTS `caldav_attachments` (
@@ -89,7 +86,40 @@ CREATE TABLE IF NOT EXISTS `caldav_attachments` (
   `data` longtext NOT NULL,
   PRIMARY KEY(`attachment_id`),
   CONSTRAINT `fk_caldav_attachments_event_id` FOREIGN KEY (`event_id`)
-  REFERENCES `caldav_events`(`event_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  REFERENCES `events`(`event_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) /*!40000 ENGINE=INNODB */ /*!40101 CHARACTER SET utf8 COLLATE utf8_general_ci */;
 
-REPLACE INTO `system` (`name`, `value`) VALUES ('calendar-caldav-version', '2019010100');
+/* Migrate Data */
+INSERT INTO caldav_calendars SELECT calendar_id, user_id, `name`, color, showalarms, url as caldav_url,
+                               tag as caldav_tag, username as caldav_user, pass as caldav_pass,
+                               last_change as caldav_last_change
+FROM calendars cal, caldav_props dav
+WHERE dav.obj_id = cal.calendar_id
+AND dav.obj_type = 'vcal';
+
+INSERT INTO caldav_events SELECT e.*, dav.url as caldav_url, dav.tag as caldav_tag, dav.last_change as caldav_last_change
+FROM `events` e, caldav_props dav
+WHERE dav.obj_id = e.event_id
+AND dav.obj_type = 'vevent';
+
+INSERT INTO caldav_attachments SELECT * FROM attachments a
+WHERE a.event_id IN (
+  SELECT obj_id FROM caldav_props dav
+  WHERE dav.obj_type = 'vevent'
+);
+
+/* Drop deprecated data */
+DELETE FROM `events` WHERE event_id IN (
+    SELECT obj_id FROM caldav_props dav
+    WHERE dav.obj_type = 'vevent'
+);
+DELETE FROM calendars WHERE calendar_id IN (
+  SELECT obj_id FROM caldav_props dav
+  WHERE dav.obj_type = 'vcal'
+);
+DELETE FROM attachments WHERE event_id IN (
+  SELECT obj_id FROM caldav_props dav
+  WHERE dav.obj_type = 'vevent'
+);
+DROP TABLE caldav_props;
+

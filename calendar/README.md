@@ -2,13 +2,25 @@
 
 ## WARNING - This Repo is not for the faint of heart
 Be warned. This is **NOT** intended for Production Use. \
-This plugin will be under constant development for the foreseeable future with **ASOLUTELY NO SUPPORT** at the moment. As soon as I get the new features added and operating as expected, support will **MOST DEFINATELY** resume. \
+This plugin will be under constant development for the foreseeable future with **ASOLUTELY NO SUPPORT** at the moment.  \
+As soon as I get the new features I am working on added and operating as expected, support will **MOST DEFINATELY** resume. \
 Never fret, I have a Stable Version Ready to Rock 'n Roll. Download below ...  \
 [Stable Version](https://github.com/texxasrulez/caldav_calendar) - LTS Version.
 
-**USE AT YOUR OWN RISK**
+I would really **LOVE** a little help on this project. Tons of lines of code to go through for just one old man.  \
+I know it would be a **HUGE HELP** to me personally and many other individual users because I really believe  \
+this Calendar can become something amazing with some skilled PHP Developers on my side. I am self taught  \
+at what I do and I have pulled some pretty cool stuff off. Out of the many other calendar plugins hosted on  \
+Github that I have used, this one is by far the best choice, IMHO, and I am far from the best at PHP. So that  \
+is why I am asking for help. If someone like me, who knows just enough programming to be dangerous, can do  \
+something like this, just imagine what a properly trained Programmer can do.  \
+Thank you for listening to this old mans ramblings.  \
+  
+---  
+  
+**USE AT YOUR OWN RISK**  
 
-**Tested and working using the following:**
+**Tested and working using the following:**  
 * Roundcube v1.4.7
 * Composer v1.10.9
 * Nextcloud v18.0
@@ -67,7 +79,7 @@ If anyone would like to help maintain and develop more features, I would truly a
 - [x] ~~Assign random colors upon initial sync of calendars.~~ - Thank you @drlight17
 - [ ] Add sound notifications.
 - [ ] Integrate a Caldav Enabled Tasklist plugin.
-- [x] ~~Add Emoticon Support.~~
+- [x] ~~Add Emoticon Support.~~ @texxasrulez
 - [x] ~~Remove mcrypt and replace with openssl.~~ Thank you @MAT-WEISS-2017
 * User feature requests are always welcome but I cannot guarantee if I can pull it off ... :relaxed:
 

@@ -1,11 +1,17 @@
 {
-	"name": "texxasrulez/caldav_calendar_te",
+	"name": "texxasrulez/calendar",
 	"type": "roundcube-plugin",
-	"description": "CalDav Capable Calendar plugin for Roundcube forked from Kolab 3.5.2. The _te stands for Texas Edition",
-	"homepage": "https://github.com/texxasrulez/caldav_calendar_te",
+	"description": "CalDav Capable Calendar plugin for Roundcube and Nextcloud",
+	"homepage": "https://github.com/texxasrulez/calendar",
 	"license": "GPL-3.0-only",
-	"version": "dev",
+	"version": "1.0",
 	"authors": [
+		{
+			"name": "Gene Hawkins",
+			"email": "texxasrulez@yahoo.com",
+			"homepage": "https://www.genesworld.net",
+			"role": "Developer"
+		},
 		{
 			"name": "Thomas Bruederli",
 			"email": "bruederli@kolabsys.com",
@@ -14,11 +20,6 @@
 		{
 			"name": "Aleksander Machniak",
 			"email": "machniak@kolabsys.com",
-			"role": "Developer"
-		},
-		{
-			"name": "Gene Hawkins",
-			"email": "texxasrulez@yahoo.com",
 			"role": "Developer"
 		}
 	],
@@ -30,16 +31,14 @@
 	],
 	"require": {
 		"php": ">=7.1.0",
-		"texxasrulez/libcalendaring": "*",
-		"texxasrulez/libkolab": "*",
-		"league/oauth2-server": "*",
+		"roundcube/plugin-installer": ">=0.1.3",
+		"texxasrulez/libcalendaring": ">=1.0",
+		"texxasrulez/libkolab": ">=1.0",
+		"sabre/dav": "3.0.9",
+		"sabre/event": "*",
+		"sabre/vobject": "*",
 		"league/oauth2-client": "*",
 		"league/oauth2-google": "*",
-		"sabre/dav": "3.0.9",
-		"sabre/vobject": "*",
-		"sabre/event": "*",
-		"sabre/xml": "*",
-		"sabre/http": "*",
-		"sabre/uri": "*"
+		"fxp/composer-asset-plugin": "*"
 	}
 }
